@@ -1,30 +1,20 @@
-variable "iam_group_name" {
-  description = "Name of the IAM group."
+
+variable "aws_region" {
+  description = "AWS region for the Terraform deployment"
   type        = string
 }
 
-variable "iam_policy_name" {
-  description = "Name of the custom IAM policy."
-  type        = string
-}
-
-variable "iam_role_name" {
-  description = "Name of the IAM role for EC2."
-  type        = string
-}
-
-variable "iam_instance_profile_name" {
-  description = "Name of the EC2 IAM instance profile."
+variable "resource_prefix" {
+  description = "Prefix used to name IAM resources"
   type        = string
 }
 
 variable "s3_bucket_name" {
-  description = "Name of the existing S3 bucket for write access."
+  description = "Existing S3 bucket for the custom IAM policy"
   type        = string
 }
 
-
 variable "project_tag" {
-  description = "Value of the required Project tag."
+  description = "Project tag applied to all created resources"
   type        = string
 }

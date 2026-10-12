@@ -1,11 +1,12 @@
+
 resource "aws_iam_group" "this" {
-  name = var.iam_group_name
+  name = "${var.resource_prefix}-iam-group"
+
 
 }
 
 resource "aws_iam_policy" "s3_write" {
-  name        = var.iam_policy_name
-  description = "Write-only object access to the specified S3 bucket."
+  name = "${var.resource_prefix}-iam-policy"
 
   policy = templatefile("${path.module}/policy.json", {
     bucket_name = var.s3_bucket_name
@@ -17,7 +18,7 @@ resource "aws_iam_policy" "s3_write" {
 }
 
 resource "aws_iam_role" "ec2" {
-  name = var.iam_role_name
+  name = "${var.resource_prefix}-iam-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -42,8 +43,8 @@ resource "aws_iam_role_policy_attachment" "s3_write" {
   policy_arn = aws_iam_policy.s3_write.arn
 }
 
-resource "aws_iam_instance_profile" "this" {
-  name = var.iam_instance_profile_name
+resource "aws_iam_instance_profile" "ec2" {
+  name = "${var.resource_prefix}-iam-instance-profile"
   role = aws_iam_role.ec2.name
 
   tags = {
